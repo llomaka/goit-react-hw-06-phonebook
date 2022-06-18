@@ -1,0 +1,13 @@
+.header {
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+.input {
+  height: 45px;
+  padding: 6px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.87;
+}
