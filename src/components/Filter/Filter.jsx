@@ -1,7 +1,13 @@
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { contactsReducer, changeFilter } from "redux/store";
 import styles from "./Filter.module.css";
 
-export default function Filter({ filter, onChange }) {
+export default function Filter() {
+  const filter = useSelector(state => state.contacts.filter);
+  const dispatch = useDispatch(contactsReducer);
+
+  const onChange = event => dispatch(changeFilter(event.target.value.trim()));
+
     return (
       <>
         <h2 className={styles.header}>Find contacts by name</h2>
@@ -14,10 +20,5 @@ export default function Filter({ filter, onChange }) {
           />
       </>
     )
-};
-
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 
