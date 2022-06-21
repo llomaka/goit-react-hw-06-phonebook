@@ -5,7 +5,7 @@ import styles from "./ContactList.module.css";
 export default function ContactList() {
   const contacts = useSelector(state => state.contacts.items);
   const filter = useSelector(state => state.contacts.filter);
-  const dispatch = useDispatch(contactsReducer(deleteContact));
+  const dispatch = useDispatch(contactsReducer);
   const renderContactList = () => contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()));
 
   return (
