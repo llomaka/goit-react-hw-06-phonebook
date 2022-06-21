@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { contactsReducer, addContact } from "redux/store";
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import contactsReducer, { addContact } from 'redux/contactsSlice';
 import { nanoid } from 'nanoid';
-import styles from "./ContactForm.module.css";
+import styles from './ContactForm.module.css';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
@@ -11,6 +11,10 @@ export default function ContactForm() {
   const numberInputId = nanoid();
   const contacts = useSelector(state => state.contacts.items);
   const dispatch = useDispatch(contactsReducer);
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -31,14 +35,14 @@ export default function ContactForm() {
     if (contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
       return alert(`${name} is already in Contacts List!`);
     }
-    dispatch(addContact({ name, number }));
+    dispatch(addContact({ id: nanoid(), name, number }));
     resetForm();
   };
 
   return (
       <form
         className={styles.form}
-        autoComplete="on"
+        autoComplete='on'
         onSubmit={handleSubmit}
       >
         <div className={styles.fields}>
@@ -49,13 +53,13 @@ export default function ContactForm() {
           </label>
           <input
             className={styles.input}
-            type="text"
-            name="name"
+            type='text'
+            name='name'
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
             id={nameInputId}
-            placeholder="John Smith"
+            placeholder='John Smith'
             onChange={handleInputChange}
             value={name}
           />
@@ -68,21 +72,21 @@ export default function ContactForm() {
           </label>
           <input
             className={styles.input}
-            type="tel"
-            name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            type='tel'
+            name='number'
+            pattern='\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}'
+            title='Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
             required
             id={numberInputId}
-            placeholder="050-123-23-23"
+            placeholder='050-123-23-23'
             onChange={handleInputChange}
             value={number}
           />
         </div>
         <button
         className={styles.button}
-        type="submit"
-        name="submit_button"
+        type='submit'
+        name='submit_button'
         >
           Add contact
         </button>

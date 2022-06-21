@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import { contactsReducer, changeFilter } from "redux/store";
-import styles from "./Filter.module.css";
+import { useDispatch, useSelector } from 'react-redux';
+import contactsReducer, { changeFilter } from 'redux/contactsSlice';
+import styles from './Filter.module.css';
 
 export default function Filter() {
   const filter = useSelector(state => state.contacts.filter);
@@ -13,8 +13,8 @@ export default function Filter() {
         <h2 className={styles.header}>Find contacts by name</h2>
         <input
           className={styles.input}
-          type="text"
-          name="filter"
+          type='text'
+          name='filter'
           onChange={onChange}
           value={filter}
           />

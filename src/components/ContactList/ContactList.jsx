@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import { contactsReducer, deleteContact } from "redux/store";
-import styles from "./ContactList.module.css";
+import { useDispatch, useSelector } from 'react-redux';
+import contactsReducer, { deleteContact } from 'redux/contactsSlice';
+import styles from './ContactList.module.css';
 
 export default function ContactList() {
   const contacts = useSelector(state => state.contacts.items);
@@ -19,7 +19,7 @@ export default function ContactList() {
         {contact.name}: {contact.number}
         <button
           className={styles.button}
-          type="button"
+          type='button'
           onClick={() => dispatch(deleteContact(contact.id))}
         >
           Delete
