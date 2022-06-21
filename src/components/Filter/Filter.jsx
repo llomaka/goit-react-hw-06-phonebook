@@ -6,7 +6,7 @@ export default function Filter() {
   const filter = useSelector(state => state.contacts.filter);
   const dispatch = useDispatch(contactsReducer);
 
-  const onChange = event => dispatch(changeFilter(event.target.value.trim()));
+  const onChange = event => dispatch(changeFilter(event.target.value));
 
     return (
       <>

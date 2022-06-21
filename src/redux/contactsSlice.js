@@ -1,15 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = () => {
-  if (localStorage.getItem('contacts')) {
-    return {
-      'items': JSON.parse(localStorage.getItem('contacts')),
-      'filter': ''
-    };
-  } else return {
-    'items': [],
-      'filter': ''
-  }
+const initialState = {
+  'items': [],
+  'filter': ''
 };
 
 const contactsSlice = createSlice({

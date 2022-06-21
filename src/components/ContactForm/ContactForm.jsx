@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import contactsReducer, { addContact } from 'redux/contactsSlice';
 import { nanoid } from 'nanoid';
@@ -11,10 +11,6 @@ export default function ContactForm() {
   const numberInputId = nanoid();
   const contacts = useSelector(state => state.contacts.items);
   const dispatch = useDispatch(contactsReducer);
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
 
   const handleInputChange = event => {
     const { name, value } = event.target;
