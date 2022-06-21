@@ -1,4 +1,6 @@
 import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import { nanoid } from 'nanoid';
 
 const addContact = createAction('addContact', function prepare({ name, number }) {
@@ -23,11 +25,26 @@ export const contactsReducer = createReducer(initialState, (builder) => {
   builder.addCase(changeFilter.type, (state, action) => ({ ...state, 'filter': action.payload }))
 })
 
+const persistConfig = {
+  key: 'contacts',
+  storage,
+}
 
-export const store = configureStore({
+const persistedReducer = persistReducer(persistConfig, contactsReducer);
+
+const store = configureStore({
   reducer: {
-    contacts: contactsReducer,
-  }
+    contacts: persistedReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
-export { addContact, deleteContact, changeFilter };
+const persistor = persistStore(store);
+
+export { addContact, deleteContact, changeFilter, store, persistor };
+
